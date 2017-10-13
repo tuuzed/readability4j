@@ -24,7 +24,17 @@ import java.util.*;
 @Slf4j
 public class ReadabilityCoreExtractor implements ReadabilityExtractor {
 
-    private boolean stripUnlikelyCandidates = true;
+
+    private ReadabilityCoreExtractor() {
+    }
+
+    public static ReadabilityExtractor getInstance() {
+        return Holder.instance;
+    }
+
+    private static class Holder {
+        private static final ReadabilityCoreExtractor instance = new ReadabilityCoreExtractor();
+    }
 
 
     /**
@@ -34,13 +44,13 @@ public class ReadabilityCoreExtractor implements ReadabilityExtractor {
      * @return
      */
     @Override
-    public Element grabArticle(Article article, ReadabilityExtractor readabilityExtractor) {
+    public Element grabArticle(Article article) {
         Element extractedContent;
         extractedContent = fetchArticleContent(article.getCleanedDocument());
         if (article.isMultiPageStatus()) {
             AppendNextPage appendNextPage = new AppendNextPage();
             // finalConsolidated
-            return appendNextPage.appendNextPageContent(article, extractedContent, readabilityExtractor);
+            return appendNextPage.appendNextPageContent(article, extractedContent, this);
         } else {
             return extractedContent;
         }
@@ -55,7 +65,7 @@ public class ReadabilityCoreExtractor implements ReadabilityExtractor {
     @Override
     public Element fetchArticleContent(Document document) {
 
-        String pageCacheHtml = document.html();
+        // String pageCacheHtml = document.html();
         Elements allElements = document.getAllElements();
 
         /*
@@ -116,22 +126,19 @@ public class ReadabilityCoreExtractor implements ReadabilityExtractor {
             if (goodAsDead.contains(node)) {
                 continue;
             }
-            
-        	 /* Remove unlikely candidates */
-            if (stripUnlikelyCandidates) {
-                String unlikelyMatchString = node.className() + node.id();
-                if (Patterns.exists(Patterns.UNLIKELY_CANDIDATES, unlikelyMatchString)
-                        && !Patterns.exists(Patterns.OK_MAYBE_ITS_A_CANDIDATE, unlikelyMatchString)
-                        && !"body".equals(node.tagName())) {
-                    log.debug("Removing unlikely candidate - " + unlikelyMatchString);
-                    List<Element> toRemoveAndBelow = node.getAllElements();
-                    listIterator.remove();
+            /* Remove unlikely candidates */
+            String unlikelyMatchString = node.className() + node.id();
+            if (Patterns.exists(Patterns.UNLIKELY_CANDIDATES, unlikelyMatchString)
+                    && !Patterns.exists(Patterns.OK_MAYBE_ITS_A_CANDIDATE, unlikelyMatchString)
+                    && !"body".equals(node.tagName())) {
+                log.debug("Removing unlikely candidate - " + unlikelyMatchString);
+                List<Element> toRemoveAndBelow = node.getAllElements();
+                listIterator.remove();
                     /*
                      * adding 'node' to that set is harmless and reduces the code complexity here.
                      */
-                    goodAsDead.addAll(toRemoveAndBelow);
-                    continue;
-                }
+                goodAsDead.addAll(toRemoveAndBelow);
+                continue;
             }
 
             if ("p".equals(node.tagName()) || "td".equals(node.tagName()) || "pre".equals(node.tagName())) {
@@ -370,7 +377,7 @@ public class ReadabilityCoreExtractor implements ReadabilityExtractor {
                 }
 
             }/*else {
-			 articleContent.appendChild(topCandidate);*/
+             articleContent.appendChild(topCandidate);*/
         }
         //return articleContent;
 
@@ -388,7 +395,7 @@ public class ReadabilityCoreExtractor implements ReadabilityExtractor {
 
     private Element changeElementTag(Element element, String newTag, Document document) {
         Element newElement = document.createElement(newTag);
-	    /* JSoup gives us the live child list, so we need to make a copy. */
+        /* JSoup gives us the live child list, so we need to make a copy. */
         List<Node> copyOfChildNodeList = new ArrayList<Node>();
         copyOfChildNodeList.addAll(element.childNodes());
         for (Node n : copyOfChildNodeList) {

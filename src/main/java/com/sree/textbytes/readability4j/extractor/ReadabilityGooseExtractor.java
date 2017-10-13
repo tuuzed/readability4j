@@ -26,14 +26,25 @@ import java.util.Set;
 
 @Slf4j
 public class ReadabilityGooseExtractor implements ReadabilityExtractor {
+    private ReadabilityGooseExtractor() {
+    }
+
+    public static ReadabilityExtractor getInstance() {
+        return Holder.instance;
+    }
+
+    private static class Holder {
+        private static final ReadabilityGooseExtractor instance = new ReadabilityGooseExtractor();
+    }
+
     @Override
-    public Element grabArticle(Article article, ReadabilityExtractor readabilityExtractor) {
+    public Element grabArticle(Article article) {
         Element extractedContent;
         extractedContent = fetchArticleContent(article.getCleanedDocument());
         if (article.isMultiPageStatus()) {
             AppendNextPage appendNextPage = new AppendNextPage();
             // finalConsolidated
-            return appendNextPage.appendNextPageContent(article, extractedContent, readabilityExtractor);
+            return appendNextPage.appendNextPageContent(article, extractedContent, this);
         } else {
             return extractedContent;
         }

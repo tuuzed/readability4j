@@ -30,11 +30,11 @@ public class AppendNextPage {
      *
      * @param article
      * @param firstPageContent
-     * @param readabilityExtractor
+     * @param extractor
      * @return
      */
     public Element appendNextPageContent(Article article, Element firstPageContent,
-                                         ReadabilityExtractor readabilityExtractor) {
+                                         ReadabilityExtractor extractor) {
         int pageNumber = 1;
         DocumentFormatter documentFormatter = new DocumentFormatter();
         contentHashes.add(firstPageContent.text().hashCode());
@@ -65,7 +65,7 @@ public class AppendNextPage {
                     log.warn("JSOUP PARSE EXCEPTION ", e);
                 }
 
-                nextPageExtractedContent = readabilityExtractor.fetchArticleContent(nextPageDocument);
+                nextPageExtractedContent = extractor.fetchArticleContent(nextPageDocument);
                 if (nextPageExtractedContent != null) {
                     if (checkDuplicateNextPage(nextPageExtractedContent.text().hashCode())) {
                         log.debug("Duplicate next page content found , skipping");

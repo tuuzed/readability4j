@@ -4,10 +4,10 @@
 
     <groupId>com.sree.textbytes</groupId>
     <artifactId>readability4j</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
-    <name>readabilityBUNDLE</name>
+    <name>readability4j</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -26,11 +26,6 @@
             <version>0.0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/StringHelpers-0.0.1.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.6</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -58,14 +53,6 @@
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <configuration>
-                    <downloadSources>true</downloadSources>
-                    <downloadJavadocs>true</downloadJavadocs>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

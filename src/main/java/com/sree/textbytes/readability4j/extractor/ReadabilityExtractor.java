@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 public interface ReadabilityExtractor {
-    Element grabArticle(Article article, ReadabilityExtractor readabilityExtractor);
+    Element grabArticle(Article article);
 
     Element fetchArticleContent(Document nextPageDocument);
 }

@@ -25,12 +25,11 @@ public class SampleUsage {
 
     @Test
     public void usage() throws Exception {
-        ContentExtractor ce = new ContentExtractor();
-        String url =
-                "http://www.firstpost.com/tech/htc-eyes-15-indian-smartphone-market-to-open-7000-outlets-1164045.html";
+        String url = "http://geek.csdn.net/news/detail/239665";
         String html = fetchHtml(url);
-        Article article = ce.extractContent(html);
+        Article article = ContentExtractor.extract(html, ContentExtractor.Algorithm.SNACK);
         System.out.println(article.getTitle());
         System.out.println(article.getCleanedArticleText());
+        System.out.println(article.getTags());
     }
 }

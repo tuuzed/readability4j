@@ -196,8 +196,6 @@ public class DocumentFormatter {
             if (e.tagName().equals("p")) {
                 continue;
             }
-
-
             log.debug("CLEANUP  NODE: " + e.id() + " class: " + e.attr("class") + "Node : " + e);
             // now check for word density
             // grab all the paragraphs in the children and remove ones that are too small to matter
@@ -247,15 +245,10 @@ public class DocumentFormatter {
 
             if (e.tagName().equals("ul") || e.tagName().equals("ol")) {
                 log.debug("Tag is ul or ol, skipping");
-                continue;
             } else if (e.tagName().equals("div") || e.tagName().equals("a")) {
-
                 Elements tableElements = e.getElementsByTag("table");
-
                 double topNodeScore = ScoreInfo.getContentScore(node);
                 double currentNodeScore = ScoreInfo.getContentScore(e);
-
-
                 Elements imgElements = e.getElementsByTag("img");
                 Elements iframeElements = e.getElementsByTag("iframe");
                 log.debug("Image size : " + imgElements.size());
@@ -339,10 +332,10 @@ public class DocumentFormatter {
         clean(articleContent, "object");
         clean(articleContent, "h1");
 
-        /**
+        /*
          * If there is only one h2, they are probably using it as a header and not a subheader, so remove it
          * since we already have a header.
-         ***/
+         */
         if (articleContent.getElementsByTag("h2").size() == 1) {
             clean(articleContent, "h2");
         }
@@ -384,10 +377,11 @@ public class DocumentFormatter {
 
     private Element cleanConditionally(Element element, String tag) {
         Elements tagList = element.getElementsByTag(tag);
-        ReadabilitySnackExtractor readability = new ReadabilitySnackExtractor();
+        ReadabilitySnackExtractor extractor =
+                (ReadabilitySnackExtractor) ReadabilitySnackExtractor.getInstance();
         for (Element tagElement : tagList) {
             //double weight = WeightMethods.getClassWeight(tagElement);
-            double weight = readability.getElementScore(tagElement);
+            double weight = extractor.getElementScore(tagElement);
             double contentScore = ScoreInfo.getContentScore(tagElement);
             if ((weight + contentScore) < 0) {
                 log.debug("Cleaning tag wiight < 0 weight : " + weight + " content score : " + contentScore + "  tag " + tagElement);
@@ -415,8 +409,7 @@ public class DocumentFormatter {
 
                 double linkDensity = WeightMethods.getLinkDensity(tagElement);
                 int contentLength = tagElement.text().length();
-                boolean toRemove = false;
-
+                boolean toRemove;
                 if (img > p)
                     toRemove = true;
                 else if (li > p && !tag.equals("ul") && !tag.equals("ol"))
@@ -465,7 +458,6 @@ public class DocumentFormatter {
                 Matcher matcher = pattern.matcher(attributes);
                 if (matcher.find()) {
                     log.debug("Ifarme match found");
-                    continue;
                 } else {
                     target.remove();
                 }
@@ -474,7 +466,6 @@ public class DocumentFormatter {
             if (targetList.size() > 0) {
                 targetList.get(0).remove();
             }
-
         } else {
             targetList.remove();
         }

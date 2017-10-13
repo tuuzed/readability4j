@@ -3,12 +3,13 @@ package com.sree.textbytes.readability4j;
 import com.sree.textbytes.StringHelpers.StringSplitter;
 import com.sree.textbytes.StringHelpers.string;
 import com.sree.textbytes.readability4j.cleaner.DocumentCleaner;
+import com.sree.textbytes.readability4j.extractor.ReadabilityCoreExtractor;
 import com.sree.textbytes.readability4j.extractor.ReadabilityExtractor;
+import com.sree.textbytes.readability4j.extractor.ReadabilityGooseExtractor;
 import com.sree.textbytes.readability4j.extractor.ReadabilitySnackExtractor;
 import com.sree.textbytes.readability4j.formatter.DocumentFormatter;
 import com.sree.textbytes.readability4j.image.BestImageGuesser;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringEscapeUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -28,24 +29,48 @@ import java.util.Set;
 @Slf4j
 public class ContentExtractor {
 
+    public enum Algorithm {
 
-    public Article extractContent(String rawHtml) {
-        return performExtraction(rawHtml, new ReadabilitySnackExtractor(), null);
+        SNACK(ReadabilitySnackExtractor.getInstance()),
+        CORE(ReadabilityCoreExtractor.getInstance()),
+        GOOSE(ReadabilityGooseExtractor.getInstance());
+
+        private ReadabilityExtractor extractor;
+
+        Algorithm(ReadabilityExtractor extractor) {
+            this.extractor = extractor;
+        }
+
+        public ReadabilityExtractor getExtractor() {
+            return extractor;
+        }
     }
 
-    public Article extractContent(String rawHtml, List<String> htmlSources) {
-        return performExtraction(rawHtml, new ReadabilitySnackExtractor(), htmlSources);
+    private ContentExtractor() {
     }
 
-    public Article extractContent(String rawHtml, ReadabilityExtractor readabilityExtractor, List<String> htmlSources) {
-        return performExtraction(rawHtml, readabilityExtractor, htmlSources);
+    private static class Holder {
+        private static final ContentExtractor instance = new ContentExtractor();
     }
 
-    public Article extractContent(String rawHtml, ReadabilityExtractor readabilityExtractor) {
-        return performExtraction(rawHtml, readabilityExtractor, null);
+
+    public static Article extract(String rawHtml) {
+        return Holder.instance.performExtraction(rawHtml, Algorithm.SNACK, null);
     }
 
-    private Article performExtraction(String rawHtml, ReadabilityExtractor readabilityExtractor, List<String> htmlSources) {
+    public static Article extract(String rawHtml, List<String> htmlSources) {
+        return Holder.instance.performExtraction(rawHtml, Algorithm.SNACK, htmlSources);
+    }
+
+    public static Article extract(String rawHtml, Algorithm algorithm, List<String> htmlSources) {
+        return Holder.instance.performExtraction(rawHtml, algorithm, htmlSources);
+    }
+
+    public static Article extract(String rawHtml, Algorithm algorithm) {
+        return Holder.instance.performExtraction(rawHtml, algorithm, null);
+    }
+
+    private Article performExtraction(String rawHtml, Algorithm algorithm, List<String> htmlSources) {
         Article article = new Article();
         try {
             article.setRawHtml(rawHtml);
@@ -92,7 +117,7 @@ public class ContentExtractor {
             document = documentCleaner.clean(document);
             log.debug("Cleaned Document: {}", document.toString());
             article.setCleanedDocument(document);
-            article.setTopNode(readabilityExtractor.grabArticle(article, readabilityExtractor));
+            article.setTopNode(algorithm.getExtractor().grabArticle(article));
 
             if (article.getTopNode() != null) {
                 log.debug("Extracted content Before CleanUP : {}", article.getTopNode());
@@ -174,7 +199,6 @@ public class ContentExtractor {
      * @param text
      * @return
      */
-
     private String outputNormalization(String text) {
         return text.replaceAll("<br[^>]*>", "<br /><br />");
     }
@@ -241,10 +265,7 @@ public class ContentExtractor {
             if (!usedDelimeter && titleText.contains(":")) {
                 titleText = doTitleSplits(titleText, Patterns.COLON_SPLITTER);
             }
-            // encode unicode charz
-            title = StringEscapeUtils.escapeHtml(titleText);
-            title = Patterns.MOTLEY_REPLACEMENT.replaceAll(title);
-            title = StringEscapeUtils.unescapeHtml(title);
+            title = titleText;
         } catch (NullPointerException e) {
             log.error(e.toString());
         }

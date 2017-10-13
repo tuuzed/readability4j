@@ -23,6 +23,18 @@ import java.util.regex.Pattern;
 @Slf4j
 public class ReadabilitySnackExtractor implements ReadabilityExtractor {
 
+    private ReadabilitySnackExtractor() {
+    }
+
+    public static ReadabilityExtractor getInstance() {
+        return Holder.instance;
+    }
+
+    private static class Holder {
+        private static final ReadabilitySnackExtractor instance = new ReadabilitySnackExtractor();
+    }
+
+
     // Unlikely candidates
     private final Pattern UNLIKELY = Pattern
             .compile("^(com(bx|ment|munity)|dis(qus|cuss)|e(xtra|[-]?mail)|foot|"
@@ -41,17 +53,18 @@ public class ReadabilitySnackExtractor implements ReadabilityExtractor {
 
 
     @Override
-    public Element grabArticle(Article article, ReadabilityExtractor readabilityExtractor) {
+    public Element grabArticle(Article article) {
         Element extractedContent;
         extractedContent = fetchArticleContent(article.getCleanedDocument());
         if (article.isMultiPageStatus()) {
             AppendNextPage appendNextPage = new AppendNextPage();
             // finalConsolidated
-            return appendNextPage.appendNextPageContent(article, extractedContent, readabilityExtractor);
+            return appendNextPage.appendNextPageContent(article, extractedContent, this);
         } else {
             return extractedContent;
         }
     }
+
     @Override
     public Element fetchArticleContent(Document document) {
         Element topNode = null;

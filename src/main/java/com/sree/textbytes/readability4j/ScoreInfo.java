@@ -53,7 +53,6 @@ public class ScoreInfo {
             if (string.isNullOrEmpty(grvScoreString))
                 return 0;
             return Double.parseDouble(grvScoreString);
-
         } catch (NumberFormatException e) {
             return 0;
         }
