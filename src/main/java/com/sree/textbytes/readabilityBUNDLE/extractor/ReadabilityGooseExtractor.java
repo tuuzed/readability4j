@@ -1,12 +1,12 @@
-package com.sree.textbytes.readability4j.extractor;
+package com.sree.textbytes.readabilityBUNDLE.extractor;
 
 import com.sree.textbytes.StringHelpers.StopWords;
 import com.sree.textbytes.StringHelpers.WordStats;
-import com.sree.textbytes.readability4j.AddSiblings;
-import com.sree.textbytes.readability4j.Article;
-import com.sree.textbytes.readability4j.Patterns;
-import com.sree.textbytes.readability4j.ScoreInfo;
-import com.sree.textbytes.readability4j.nextpage.AppendNextPage;
+import com.sree.textbytes.readabilityBUNDLE.AddSiblings;
+import com.sree.textbytes.readabilityBUNDLE.Article;
+import com.sree.textbytes.readabilityBUNDLE.Patterns;
+import com.sree.textbytes.readabilityBUNDLE.ScoreInfo;
+import com.sree.textbytes.readabilityBUNDLE.nextpage.AppendNextPage;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

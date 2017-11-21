@@ -1,4 +1,4 @@
-package com.sree.textbytes.readability4j;
+package com.sree.textbytes.readabilityBUNDLE;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

@@ -1,4 +1,4 @@
-package com.sree.textbytes.readability4j.image;
+package com.sree.textbytes.readabilityBUNDLE.image;
 
 import lombok.Data;
 import org.jsoup.nodes.Element;

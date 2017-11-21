@@ -1,7 +1,7 @@
-package com.sree.textbytes.readability4j.extractor;
+package com.sree.textbytes.readabilityBUNDLE.extractor;
 
-import com.sree.textbytes.readability4j.*;
-import com.sree.textbytes.readability4j.nextpage.AppendNextPage;
+import com.sree.textbytes.readabilityBUNDLE.*;
+import com.sree.textbytes.readabilityBUNDLE.nextpage.AppendNextPage;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

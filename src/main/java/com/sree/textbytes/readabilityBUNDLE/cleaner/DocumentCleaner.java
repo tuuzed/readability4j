@@ -1,8 +1,8 @@
-package com.sree.textbytes.readability4j.cleaner;
+package com.sree.textbytes.readabilityBUNDLE.cleaner;
 
 import com.sree.textbytes.StringHelpers.ReplaceSequence;
 import com.sree.textbytes.StringHelpers.string;
-import com.sree.textbytes.readability4j.Patterns;
+import com.sree.textbytes.readabilityBUNDLE.Patterns;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

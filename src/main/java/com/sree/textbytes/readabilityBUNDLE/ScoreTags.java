@@ -1,4 +1,4 @@
-package com.sree.textbytes.readability4j;
+package com.sree.textbytes.readabilityBUNDLE;
 
 /**
  * @author sree

@@ -1,4 +1,4 @@
-package com.sree.textbytes.readability4j.image;
+package com.sree.textbytes.readabilityBUNDLE.image;
 
 import com.sree.textbytes.StringHelpers.string;
 import lombok.extern.slf4j.Slf4j;

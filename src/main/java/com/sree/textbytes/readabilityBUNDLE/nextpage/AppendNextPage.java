@@ -1,10 +1,10 @@
-package com.sree.textbytes.readability4j.nextpage;
+package com.sree.textbytes.readabilityBUNDLE.nextpage;
 
-import com.sree.textbytes.readability4j.Article;
-import com.sree.textbytes.readability4j.ParseWrapper;
-import com.sree.textbytes.readability4j.cleaner.DocumentCleaner;
-import com.sree.textbytes.readability4j.extractor.ReadabilityExtractor;
-import com.sree.textbytes.readability4j.formatter.DocumentFormatter;
+import com.sree.textbytes.readabilityBUNDLE.Article;
+import com.sree.textbytes.readabilityBUNDLE.ParseWrapper;
+import com.sree.textbytes.readabilityBUNDLE.cleaner.DocumentCleaner;
+import com.sree.textbytes.readabilityBUNDLE.extractor.ReadabilityExtractor;
+import com.sree.textbytes.readabilityBUNDLE.formatter.DocumentFormatter;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

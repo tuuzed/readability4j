@@ -1,6 +1,6 @@
-package com.sree.textbytes.readability4j;
+package com.sree.textbytes.readabilityBUNDLE;
 
-import com.sree.textbytes.readability4j.image.Image;
+import com.sree.textbytes.readabilityBUNDLE.image.Image;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

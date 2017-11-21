@@ -1,4 +1,4 @@
-package com.sree.textbytes.readability4j;
+package com.sree.textbytes.readabilityBUNDLE;
 
 import com.sree.textbytes.StringHelpers.ReplaceSequence;
 import com.sree.textbytes.StringHelpers.StringReplacement;

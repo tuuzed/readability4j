@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.sree.textbytes</groupId>
-    <artifactId>readability4j</artifactId>
+    <artifactId>readability</artifactId>
     <version>0.1.0</version>
     <packaging>jar</packaging>
 
-    <name>readability4j</name>
+    <name>readability</name>
     <url>http://maven.apache.org</url>
 
     <properties>

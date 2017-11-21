@@ -1,14 +1,14 @@
-package com.sree.textbytes.readability4j;
+package com.sree.textbytes.readabilityBUNDLE;
 
 import com.sree.textbytes.StringHelpers.StringSplitter;
 import com.sree.textbytes.StringHelpers.string;
-import com.sree.textbytes.readability4j.cleaner.DocumentCleaner;
-import com.sree.textbytes.readability4j.extractor.ReadabilityCoreExtractor;
-import com.sree.textbytes.readability4j.extractor.ReadabilityExtractor;
-import com.sree.textbytes.readability4j.extractor.ReadabilityGooseExtractor;
-import com.sree.textbytes.readability4j.extractor.ReadabilitySnackExtractor;
-import com.sree.textbytes.readability4j.formatter.DocumentFormatter;
-import com.sree.textbytes.readability4j.image.BestImageGuesser;
+import com.sree.textbytes.readabilityBUNDLE.cleaner.DocumentCleaner;
+import com.sree.textbytes.readabilityBUNDLE.extractor.ReadabilityCoreExtractor;
+import com.sree.textbytes.readabilityBUNDLE.extractor.ReadabilityExtractor;
+import com.sree.textbytes.readabilityBUNDLE.extractor.ReadabilityGooseExtractor;
+import com.sree.textbytes.readabilityBUNDLE.extractor.ReadabilitySnackExtractor;
+import com.sree.textbytes.readabilityBUNDLE.formatter.DocumentFormatter;
+import com.sree.textbytes.readabilityBUNDLE.image.BestImageGuesser;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

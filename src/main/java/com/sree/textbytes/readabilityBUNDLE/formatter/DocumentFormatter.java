@@ -1,11 +1,11 @@
-package com.sree.textbytes.readability4j.formatter;
+package com.sree.textbytes.readabilityBUNDLE.formatter;
 
 import com.sree.textbytes.StringHelpers.PatternMatcher;
 import com.sree.textbytes.StringHelpers.string;
-import com.sree.textbytes.readability4j.Patterns;
-import com.sree.textbytes.readability4j.ScoreInfo;
-import com.sree.textbytes.readability4j.WeightMethods;
-import com.sree.textbytes.readability4j.extractor.ReadabilitySnackExtractor;
+import com.sree.textbytes.readabilityBUNDLE.Patterns;
+import com.sree.textbytes.readabilityBUNDLE.ScoreInfo;
+import com.sree.textbytes.readabilityBUNDLE.WeightMethods;
+import com.sree.textbytes.readabilityBUNDLE.extractor.ReadabilitySnackExtractor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
@@ -313,7 +313,9 @@ public class DocumentFormatter {
             if (!string.isNullOrEmpty(attrib.getValue()))
                 attributes.append(attrib.getValue()).append("|");
         }
-        return attributes.substring(0, attributes.lastIndexOf("|"));
+        int index = attributes.lastIndexOf("|");
+        if (index == -1) return attributes.toString();
+        return attributes.substring(0, index);
     }
 
     /**
